@@ -1,0 +1,26 @@
+services:
+
+  app:
+    build: .
+    command: gunicorn -b 0.0.0.0:8000 app:app
+    env_file:
+      - .env
+    image: app
+    restart: always
+    ports:
+      - "8000:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - app-network
+    volumes:
+      - ./sample_input:/app/sample_input
+
+networks:
+  app-network:
+    driver: bridge
