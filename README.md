@@ -1,89 +1,41 @@
-Running the app:
-- git clone
-- cd app
-- create .env from .env.example
-- gunicorn -b 0.0.0.0:8000 app:app
 
-need /extract endpoint
+# LLM + OCR
+Tech Stack:
+- Flask + Gunicorn
+- OCR: EasyOCR
+- LLM: DeepSeek-V3
+- Docker Compose
 
-example request
+
+Starting the app:
+- git clone https://github.com/m1ll10n/llm_ocr
+- cd llm_ocr
+- create .env by copying from .env.example on same folder and must fill the DEEPSEEK_API_KEY
+- docker compose up --build
+
+Testing the endpoint:
+- File should be uploaded in base64 encoded .png format inside sample_input and must change accordingly to file in body: {"file": "new_file.png"}
+
+```console
+$ curl -X POST http://hpc-linux-1104:8000/extract -H "Content-Type: application/json" -d '{"file": "license.png"}'
+```
+
+Expected output:
+```console
 {
-  "file_base64": "<BASE64_ENCODED_PNG_OR_PDF>"
+    "dln": "A9999999",
+    "exp": "02/21/2018",
+    "family_name": "JONES",
+    "given_name": "ASEHENA",
+    "address": "1234 COMMODORE JOSHUA BARNEY DRIVE, NE #1234 1 WASHINGTON, DC OOO00-0000",
+    "sex": "E",
+    "height": "5-02",
+    "weight": "120",
+    "eyes": "BRO",
+    "dob": "02/21/1984",
+    "class": "D",
+    "iss": "02/17/2010",
+    "endorsements": "NONE",
+    "restrictions": "VETERAN"
 }
-
-* file must be simulated from document/certificate (transcript, diploma, license)
-sample must be included in repo
-
-----------------------------------------------------------------------
-
-expected output
-* extracted key-value fields
-{
-  "Name": "John Doe",
-  "DateOfBirth": "April 5, 1995",
-  "Program": "Bachelor of Engineering in Computer Science",
-  "Institution": "University of AI",
-  "StartDate": "September 2017",
-  "CompletionDate": "June 2021",
-  "CertificateNo": "123456789"
-}
-
-----------------------------------------------------------------------
-Requirements
-
-##Functional
-Endpoint: POST /extract
-
-Input: base64-encoded PNG or PDF
-
-
-Output: structured fields in JSON
-
-
-Use OCR (e.g., PaddleOCR, Tesseract, or EasyOCR) to extract raw text
-
-
-Use LLM (OpenAI, DeepSeek, or Hugging Face) to extract structured data from raw text
-
-
-##Tech Stack
-Flask + Gunicorn
-
-
-Docker (containerized app)
-
-
-.env.example for secrets (e.g., API keys)
-
-
-One-click run via: docker-compose up or docker run
-
-----------------------------------------------------------------------
-
-README should include:
-Setup instructions (docker build, docker run)
-
-
-How to test the endpoint
-
-
-Example input/output
-
-
-Model/API used (OpenAI, DeepSeek, etc.)
-
-----------------------------------------------------------------------
-
-🧪 Bonus
-✅ Add GitHub Actions for:
-Linting (flake8)
-
-
-Unit testing (e.g., pytest)
-
-
-Docker image build validation
-
-
-✅ Add error handling and graceful failover
-✅ Unit test at least one internal module (OCR or LLM call)
+```
