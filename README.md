@@ -1,5 +1,7 @@
 Running the app:
+- git clone
 - cd app
+- create .env from .env.example
 - gunicorn -b 0.0.0.0:8000 app:app
 
 need /extract endpoint

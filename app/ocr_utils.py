@@ -1,14 +1,13 @@
 import easyocr
-from PIL import Image
-import base64
 
-# import input
 
-# convert input (base64 or pdf) to image
-image_decode = base64.b64decode()
+def extract_text(file_path: str):
+    reader = easyocr.Reader(["en"])
+    result = reader.readtext(file_path)
 
-# read image and extract data with easyocr
-reader = easyocr.Reader(["en"])
-result = reader.readtext("../sample_input/base64.txt")
+    texts = []
+    for i in result:
+        _, text, _ = i
+        texts.append(text)
 
-print(result)
+    return " ".join(texts)
