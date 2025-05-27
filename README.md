@@ -17,7 +17,7 @@ Testing the endpoint:
 - File should be uploaded in base64 encoded .png format inside sample_input and must change accordingly to file in body: {"file": "new_file.png"}
 
 ```console
-$ curl -X POST http://hpc-linux-1104:8000/extract -H "Content-Type: application/json" -d '{"file": "license.png"}'
+$ curl -X POST http://localhost:8000/extract -H "Content-Type: application/json" -d '{"file": "license.png"}'
 ```
 
 Expected output:
