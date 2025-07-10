@@ -2,12 +2,12 @@ FROM python:3.12-slim
 
 ENV PYTHONBUFFERED=1
 
-WORKDIR /app
+# Install uv.
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-COPY ./requirements.txt /app/requirements.txt
-
-RUN pip install --upgrade pip \
-  && pip install torch==2.7.0 torchvision==0.22.0 --index-url https://download.pytorch.org/whl/cpu \
-  && pip install --no-cache-dir --upgrade -r /app/requirements.txt
-
+# Copy the application into the container.
 COPY . /app
+
+# Install the application dependencies.
+WORKDIR /app
+RUN uv sync --frozen --no-cache
