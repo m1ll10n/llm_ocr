@@ -1,5 +1,6 @@
 from openai import OpenAI
 import os
+import json
 from dotenv import load_dotenv
 
 
@@ -44,5 +45,6 @@ def generate_json(text: str):
     )
 
     event = completion.choices[0].message.content
+    json_event = json.loads(event)
 
-    return event
+    return json_event
