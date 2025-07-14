@@ -3,8 +3,10 @@ import os
 
 
 def extract_text(file: str):
-    reader = easyocr.Reader(["en"])
-    result = reader.readtext(os.path.join("/app/sample_input", file))
+    reader = easyocr.Reader(
+        ["en"], gpu=False, model_storage_directory="./ocr_model", download_enabled=False
+    )
+    result = reader.readtext(os.path.join("./sample_input", file))
 
     texts = []
     for i in result:

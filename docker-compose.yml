@@ -2,7 +2,7 @@ services:
 
   app:
     build: .
-    command: gunicorn -b 0.0.0.0:8000 app.app:app
+    command: uv run -- gunicorn -b 0.0.0.0:8000 app.app:app
     env_file:
       - .env
     image: app
@@ -13,6 +13,7 @@ services:
       - app-network
     volumes:
       - ./sample_input:/app/sample_input
+      - ./ocr_model:/app/ocr_model
 
 networks:
   app-network:
