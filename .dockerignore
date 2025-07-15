@@ -3,3 +3,5 @@ venv/
 .venv/
 .env.template
 .gitignore
+models/
+.pytest*

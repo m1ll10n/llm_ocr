@@ -3,7 +3,7 @@ import app.llm_utils as llm_utils
 
 
 def test_generate_json():
-    result = llm_utils.generate_json("")
+    result = llm_utils.generate_json("given_name: John family_name: Doeeyes:brown")
     assert isinstance(result, dict)
     assert "dln" in result
     assert "exp" in result
@@ -19,3 +19,9 @@ def test_generate_json():
     assert "iss" in result
     assert "endorsements" in result
     assert "restrictions" in result
+
+
+@pytest.mark.parametrize("text", [(None), ("")])
+def test_generate_json_none(text: str):
+    with pytest.raises(ValueError):
+        result = llm_utils.generate_json(text)

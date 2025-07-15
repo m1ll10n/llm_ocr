@@ -8,6 +8,10 @@ load_dotenv()
 
 
 def generate_json(text: str):
+
+    if not text:
+        raise ValueError
+
     client = OpenAI(
         api_key=os.getenv("DEEPSEEK_API_KEY"),
         base_url="https://api.deepseek.com",
