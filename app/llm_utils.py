@@ -18,7 +18,7 @@ def generate_json(text: str):
     )
 
     system_prompt = """
-    The user will provide text containing driver's license. Please parse the details into key-value pair and output them in JSON format.
+    The user will provide text containing driver's license. Please parse the details into key-value pair and output them in JSON format. Leave the value to null if there's not enough information.
 
     EXAMPLE JSON OUTPUT:
     {
