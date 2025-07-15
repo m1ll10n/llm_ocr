@@ -24,4 +24,4 @@ def test_generate_json():
 @pytest.mark.parametrize("text", [(None), ("")])
 def test_generate_json_none(text: str):
     with pytest.raises(ValueError):
-        result = llm_utils.generate_json(text)
+        llm_utils.generate_json(text)

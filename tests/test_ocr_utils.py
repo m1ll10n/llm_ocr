@@ -1,4 +1,3 @@
-import pytest
 import app.ocr_utils as ocr_utils
 
 
