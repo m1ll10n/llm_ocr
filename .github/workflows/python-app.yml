@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Install uv
       uses: astral-sh/setup-uv@v6
       with:
@@ -29,12 +29,16 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version-file: ".python-version"
-        
+
     - name: Install the project
       run: uv sync --locked --all-extras --dev
-      
+
     - name: Lint with flake8
       run: uv run -- flake8 --ignore=E501
-      
+
     - name: Test with pytest
-      run: uv run -- pytest tests
+      env:
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      run: |
+        echo "DEEPSEEK_API_KEY=$DEEPSEEK_API_KEY" >> .env
+        uv run -- pytest tests
